@@ -9,12 +9,9 @@ const lastName = document.getElementById("fLastN");
 const password = document.getElementById("fPassword");
 const phoneNumber = document.getElementById("fPhone");
 
+function validate(){ 
 form.addEventListener('submit',e=>{
-	e.preventDefault(); 
-	validate();
-}); 
-
-function validate(){
+	/* validate();  */
 	let error=0
 	const nameValue  = userName.value.trim();
 	const emailValue = email.value.trim();
@@ -23,16 +20,22 @@ function validate(){
 	const passwordValue = password.value.trim();
 	const phoneNumberValue = phoneNumber.value.trim();
 
+	const regEx = {
+		regNames: /^[A-Za-z\s]*$/,
+		regEmail: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+		regPassword: /^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]{3,8}$/,
+	}
+
 // Validate fields entered by the user: name, phone, password, and email
 
-	if(nameValue == "" || nameValue.length < 3 ){
+	if(nameValue == "" || nameValue.length < 3|| !nameValue.match(regEx.regNames)){
     userName.classList.add("is-invalid");
     error++;
 	}
 	else{
     userName.classList.remove("is-invalid");
 	}
-	if(lastNameValue == "" || lastNameValue.length < 3 ){
+	if(lastNameValue == "" || lastNameValue.length < 3 || !nameValue.match(regEx.regNames)){
     lastName.classList.add("is-invalid");
     error++;
 	}
@@ -40,7 +43,7 @@ function validate(){
     lastName.classList.remove("is-invalid");
 	
 	}
-	if(emailValue.value == "" || emailValue.length < 3){
+	if(emailValue.value == "" || emailValue.length < 3|| !emailValue.match(regEx.regEmail)){
     email.classList.add("is-invalid");
     error++;
 	}
@@ -48,7 +51,7 @@ function validate(){
     email.classList.remove("is-invalid");
 	}
 
-	if(passwordValue == "" || passwordValue.length < 4){
+	if(passwordValue == "" || passwordValue.length < 4||!passwordValue.match(regEx.regPassword)){
     password.classList.add("is-invalid");
     error++;
 	}
@@ -69,19 +72,13 @@ function validate(){
 	else{
     phoneNumber.classList.remove("is-invalid");
 	}
-
 	if(error>0){
+		e.preventDefault(); 		
     return false;
 	}else{
-    userName.classList.remove("is-invalid");
-    lastName.classList.remove("is-invalid");
-    address.classList.remove("is-invalid");
-    email.classList.remove("is-invalid");
-    password.classList.remove("is-invalid");
-    phoneNumber.classList.remove("is-invalid");
-    
     return true;
     }
+});
 }
 
 
@@ -96,30 +93,3 @@ function validate(){
 
 
 
-
-
-/* function validate() {
-	var error = 0;
-	
-	
-	
-	// Get the error elements
-	var errorName = document.getElementById("errorName");
-	var errorEmail = document.getElementById("errorEmail");  
-	
-	// Validate fields entered by the user: name, phone, password, and email
-	if(Name.value == ""){
-		error++;
-	}
-
-	if(fEmail.value == ""){
-		error++;
-	}
-	
-	if(error>0){
-		alert("Error");
-	}else{
-		alert("OK");
-	}
-
-} */
