@@ -71,30 +71,29 @@ var cartList = [];
 var cart = [];
 
 var total = 0;
+const pricesList=[];
+let productsQuantity=0
 
 // Exercise 1
 function buy(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
     const productFound= products.find(prod=>id ===prod.id);
-    cartList.push({...productFound});
+    cart.push({...productFound}); //cuando refactorizamos carList podemos desecharlo
+    productsQuantity++
+    console.log(productFound)
     //pricesList.push(productFound.price) ...comentario mio añade automaticamente el precio al total/Pero nos pide el ejercicio 3
-    //calculateTotal()
-    //console.log(pricesList)
-    console.log(productFound)    
-    console.log(cartList.length)   
-    document.getElementById("count_product").innerHTML = cartList.length
+    document.getElementById("count_product").innerHTML = productsQuantity
 }
 
 // Exercise 2
 function cleanCart() {
-    cartList.length=0
+    cart.length=0
     cart=[]
-    console.log(cartList.length)
-    console.log(cartList)
-    document.getElementById("count_product").innerHTML= cartList.length
-    printCart() 
-    calculateTotal(); 
+    productsQuantity=0
+    document.getElementById("count_product").innerHTML= cart.length
+    printCart()
+    calculateTotal();
 
 }
 
@@ -114,32 +113,33 @@ function calculateTotal() {
         if (cart[i].subtotalWithDiscount){
             total+=cart[i].subtotalWithDiscount
         }
-        else if (cart[i].subTotal){
+        else if (cart[i].subTotal>0){
             total+=cart[i].subTotal
         }
 
     }
     console.log(total) 
-    document.getElementById("total_price").innerHTML=total.toFixed(2);
+    document.getElementById("total_price").innerHTML=total
 }
 
 // Exercise 4
 function generateCart() {
     // Using the "cartlist" array that contains all the items in the shopping cart, 
     // generate the "cart" array that does not contain repeated items, instead each item of this array "cart" shows the quantity of product.
-    cart = []
     
-for (let i = 0; i < cartList.length; i++) {
-    let eachProduct=cartList[i];
+for (let i = 0; i < cart.length; i++) {
+    let eachProduct=cart[i];
     const searchProduct= cart.find(prod=>eachProduct.id===prod.id) 
     if(searchProduct){
         searchProduct.quantity+=1;
         searchProduct.subTotal+=eachProduct.price;
+        
     }
     else if (!searchProduct){        
         eachProduct.quantity=1;
         eachProduct.subTotal= eachProduct.price;
         cart.push(eachProduct)
+
     }
     }
     console.log(cart)
@@ -173,7 +173,7 @@ function printCart() {
                 <td>${cart[i].name}</td>
                 <td>${cart[i].price}</td>
                 <td>${cart[i].quantity}</td>
-                <td>${cart[i].subtotalWithDiscount.toFixed(2)}</td>
+                <td>${cart[i].subtotalWithDiscount}</td>
             </tr>`
             tabList.push(row)
             }
@@ -182,10 +182,11 @@ function printCart() {
                 <td>${cart[i].name}</td>
                 <td>${cart[i].price}</td>
                 <td>${cart[i].quantity}</td>
-                <td>${cart[i].subTotal.toFixed(2)}</td>
+                <td>${cart[i].subTotal}</td>
             </tr>`
             tabList.push(row)
             }            
+            //table.innerHTML+=row    
         } 
         table.innerHTML=tabList    
 }
@@ -204,22 +205,22 @@ function addToCart(id) {
 function removeFromCart(id) {
     // 1. Loop for to the array products to get the item to add to cart
     // 2. Add found product to the cartList array
-    const index=cartList.findIndex(prod=> id===prod.id)
+    const index=cart.findIndex(prod=> id===prod.id)
     console.log(index)
     if (index === -1) {
         alert("No hay este producto en el carrito");
     }
     else if (index !== -1) {
-        cartList.splice(index,1)
-        /*  if(cart[index].quantity==1){
+        if(cart[index].quantity==1){
             cart.splice(index, 1);
         }
         else if(cart[index].quantity>1)
-            cart[index].quantity-=1 */
+            cart[index].quantity-=1
         
     }
-    open_modal();
-    document.getElementById("count_product").innerHTML= cartList.length
+    applyPromotionsCart();
+    
+    
 }
 
 function open_modal(){
