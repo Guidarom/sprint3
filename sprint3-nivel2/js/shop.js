@@ -176,7 +176,7 @@ function printCart() {
                 <td>${cart[i].subtotalWithDiscount.toFixed(2)}</td>
             </tr>`
             tabList.push(row)
-            }
+            } 
             else if (cart[i].subTotal){
                 let row =   `<tr>
                 <td>${cart[i].name}</td>
@@ -187,7 +187,8 @@ function printCart() {
             tabList.push(row)
             }            
         } 
-        table.innerHTML=tabList    
+        table.innerHTML=tabList.join('')
+        
 }
 
 
