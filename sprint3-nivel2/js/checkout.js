@@ -27,51 +27,48 @@ form.addEventListener('submit',e=>{
 	}
 
 // Validate fields entered by the user: name, phone, password, and email
+    
+	userName.classList.remove("is-invalid");
+	lastName.classList.remove("is-invalid");
+	email.classList.remove("is-invalid");
+	password.classList.remove("is-invalid");
+	address.classList.remove("is-invalid");
+	phoneNumber.classList.remove("is-invalid");
 
 	if(nameValue == "" || nameValue.length < 3|| !nameValue.match(regEx.regNames)){
     userName.classList.add("is-invalid");
     error++;
 	}
-	else{
-    userName.classList.remove("is-invalid");
-	}
+	
+    
+
 	if(lastNameValue == "" || lastNameValue.length < 3 || !nameValue.match(regEx.regNames)){
     lastName.classList.add("is-invalid");
     error++;
 	}
-	else{
-    lastName.classList.remove("is-invalid");
-	
-	}
+		
 	if(emailValue.value == "" || emailValue.length < 3|| !emailValue.match(regEx.regEmail)){
     email.classList.add("is-invalid");
     error++;
 	}
-	else{
-    email.classList.remove("is-invalid");
-	}
-
+    
 	if(passwordValue == "" || passwordValue.length < 4||!passwordValue.match(regEx.regPassword)){
     password.classList.add("is-invalid");
     error++;
 	}
-	else{
-    password.classList.remove("is-invalid");
-	}
+	
 	if(addressValue == "" || addressValue.length < 3 ){
     address.classList.add("is-invalid");
     error++;
 	}
-	else{
-    address.classList.remove("is-invalid");
-	}
+    
+	
 	if(phoneNumberValue == "" || phoneNumberValue.length!= 9 ){
     phoneNumber.classList.add("is-invalid");
     error++;
 	}
-	else{
-    phoneNumber.classList.remove("is-invalid");
-	}
+    
+	
 	if(error>0){
 		e.preventDefault(); 		
     return false;
